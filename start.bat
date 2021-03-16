@@ -1,0 +1,1 @@
+java -jar .\backend\target\risksystem.jar
