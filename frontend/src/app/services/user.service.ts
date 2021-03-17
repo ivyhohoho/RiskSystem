@@ -3,8 +3,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {User} from '../model/user';
-import {Product} from '../model/product';
-import {Transaction} from '../model/transaction';
 
 let API_URL = "http://localhost:8080/api/user/";
 
@@ -32,11 +30,17 @@ export class UserService {
     return this.http.get<any> (API_URL + "login", {headers: headers})
     .pipe(map(response => {
       if(response){
+        response.firstLogin = true;
         localStorage.setItem('currentUser', JSON.stringify(response));
         this.currentUserSubject.next(response);
       }
       return response;
     }));
+  }
+
+  firstLogined() {
+    this.currentUserValue.firstLogin = false;
+    this.currentUserSubject.next(this.currentUserValue);
   }
 
   logOut(): Observable<any> {
@@ -49,16 +53,6 @@ export class UserService {
 
   register(user: User): Observable<any> {
     return this.http.post(API_URL + "registration", JSON.stringify(user),
-  {headers: {"Content-Type":"application/json; charset=UTF-8"}});
-  }
-
-  findAllProducts(): Observable<any> {
-    return this.http.get(API_URL + "products",
-  {headers: {"Content-Type":"application/json; charset=UTF-8"}});
-  }
-
-  purchaseProduct(transaction: Transaction): Observable<any> {
-    return this.http.post(API_URL + "purchase", JSON.stringify(transaction),
   {headers: {"Content-Type":"application/json; charset=UTF-8"}});
   }
 }

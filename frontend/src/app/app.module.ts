@@ -11,28 +11,46 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
+
+// Ant Design
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
-
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatIconModule } from '@angular/material/icon';
+import { ReportComponent } from './pages/report/report.component';
+import { LoginComponent } from './pages/user/login/login.component';
+import { UserListComponent } from './pages/user/user-list/user-list.component';
+import { SystemVarComponent } from './pages/admin/system-var/system-var.component';
+import { MarketRiskVarComponent } from './pages/admin/market-risk-var/market-risk-var.component';
+import { NotFoundComponent } from './pages/error/not-found/not-found.component';
+import { UnauthorizedComponent } from './pages/error/unauthorized/unauthorized.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReportComponent,
+    LoginComponent,
+    UserListComponent,
+    SystemVarComponent,
+    MarketRiskVarComponent,
+    NotFoundComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -44,18 +62,21 @@ registerLocaleData(en);
     IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
-    MatButtonModule,
-    MatCardModule,
-    MatInputModule,
-    MatListModule,
-    MatToolbarModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressBarModule,
-    MatIconModule,
+    NzListModule,
+    NzGridModule,
+    NzCardModule,
+    NzInputModule,
+    NzSkeletonModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    NzFormModule,
+    NzAlertModule,
+    NzTableModule,
+    NzResultModule,
+    NzDividerModule,
+    NzDrawerModule,
+    NzSelectModule,
+    NzPopconfirmModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

@@ -6,4 +6,5 @@ export class User {
   name: string="";
   role: Role;
   token: string="";
+  firstLogin: boolean=false;
 }

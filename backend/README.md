@@ -1,14 +1,15 @@
-# Product-Management
+# Risk System
 
-This project is a Spring Boot, MySQL, Hibernate and Liquibase project.
+This project is a Spring Boot, Hibernate project.
 
 ## Development server
 
-Run `Product-Management Main class` for a dev server. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.
+Run the application for a dev server. Navigate to `http://localhost:8080/`. The app will automatically reload if you
+ change any of the source files.
 
 ## Build
 
-Run `gradlew clean build`
+Run `maven clean install`
 
 java -Djava.security.egd=file:/dev/./urandom -jar app.jar
 

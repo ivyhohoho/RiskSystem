@@ -1,45 +1,49 @@
+import { UnauthorizedComponent } from './pages/error/unauthorized/unauthorized.component';
+import { MarketRiskVarComponent } from './pages/admin/market-risk-var/market-risk-var.component';
+import { SystemVarComponent } from './pages/admin/system-var/system-var.component';
+import { UserListComponent } from './pages/user/user-list/user-list.component';
+import { LoginComponent } from './pages/user/login/login.component';
+import { ReportComponent } from './pages/report/report.component';
 import { NotFoundComponent } from './pages/error/not-found/not-found.component';
 import { NgModule } from '@angular/core';
 import { Router, Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { Role } from './model/role';
-import { UnathorizedComponent } from './pages/error/unathorized/unathorized.component';
-import { RegisterComponent } from './pages/user/register/register.component';
-import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
-import { UserListComponent } from './components/admin/user-list/user-list.component';
-import { DetailComponent } from './pages/user/detail/detail.component';
-import { LoginComponent } from './pages/user/login/login.component';
-import { ProfileComponent } from './pages/user/profile/profile.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/welcome' },
+  { path: '', pathMatch: 'full', redirectTo: '/report' },
 
   //User pages
   { path: 'login', component: LoginComponent },
-  {path: 'register', component: RegisterComponent},
-  {path: 'profile',
-  component: ProfileComponent,
-  canActivate: [AuthGuard]
+  { path: 'profile',
+    component: UserListComponent,
+    canActivate: [AuthGuard],
+    data: {roles: [Role.IT_USER_ADMIN]}
   },
-  {path: 'detail', component: DetailComponent},
-  {path: 'detail/:id', component: DetailComponent},
 
-  //admin panel
-  {path: 'dashboard',
-  component: DashboardComponent,
-  canActivate: [AuthGuard],
-  data: {roles: [Role.ADMIN]}
+
+  //System pages
+  { path: 'system-var',
+    component: SystemVarComponent,
+    canActivate: [AuthGuard],
+    data: {roles: [Role.IT_SYSTEM_ADMIN]}
   },
-  {path: 'user-list',
-  component: UserListComponent,
-  canActivate: [AuthGuard],
-  data: {roles: [Role.ADMIN]}
+  { path: 'market-risk-var',
+    component: MarketRiskVarComponent,
+    canActivate: [AuthGuard],
+    data: {roles: [Role.MARKET_RISK_ADMIN]}
+  },
+
+  //Report pages
+  { path: 'report',
+    component: ReportComponent,
+    canActivate: [AuthGuard],
+    data: {roles: [Role.MARKET_RISK_REPORT_VIEWER]}
   },
 
    //error pages
    {path: '404', component: NotFoundComponent},
-   {path: '401', component: UnathorizedComponent},
-  // { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) }
+   {path: '403', component: UnauthorizedComponent},
 ];
 
 @NgModule({

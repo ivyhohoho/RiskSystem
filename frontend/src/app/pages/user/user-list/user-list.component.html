@@ -1,0 +1,96 @@
+
+<div class="user-button-panel">
+  <button nz-button nzType="primary" [nzLoading]="loading" (click)="newUser()">
+    New User
+  </button>
+</div>
+<nz-table #basicTable [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.username }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.role }}</td>
+      <td>
+        <a (click)="editUser(data)">Edit</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure delete this user?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="deleteUser(data)"
+        >Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="720"
+  [nzVisible]="visible"
+  [nzTitle]="titleTpl"
+  (nzOnClose)="close()"
+>
+  <nz-alert *ngIf="errorMessage" nzType="error" [nzMessage]="errorMessage" nzShowIcon nzCloseable> </nz-alert>
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm(validateForm.value)">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Username</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating...">
+        <input nz-input formControlName="username" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7">Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input nz-input formControlName="name" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Role</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Please select user role!">
+        <nz-select
+          id="role"
+          formControlName="role"
+          nzPlaceHolder="Select user role"
+        >
+        <nz-option *ngFor="let key of roleKeys" [nzValue]="key" [nzLabel]="roles[key]"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Password</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+        <input nz-input type="password" formControlName="password" (ngModelChange)="validateConfirmPassword()" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>Confirm Password</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+        <input nz-input type="password" formControlName="confirm" placeholder="confirm your password" />
+        <ng-template #passwordErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            Please confirm your password!
+          </ng-container>
+          <ng-container *ngIf="control.hasError('confirm')">
+            Password is inconsistent!
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <ng-template #titleTpl>
+    <div style="float: left">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid" (click)="saveUser()">Submit</button>
+      <button nz-button style="margin-left: 8px;" (click)="close()">Cancel</button>
+    </div>
+  </ng-template>
+</nz-drawer>

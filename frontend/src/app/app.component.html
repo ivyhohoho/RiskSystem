@@ -1,4 +1,4 @@
-<nz-layout class="app-layout">
+<nz-layout class="app-layout" *ngIf="userService.currentUserValue">
   <nz-sider class="menu-sidebar"
             nzCollapsible
             nzWidth="256px"
@@ -6,36 +6,35 @@
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard" *ngIf="currentUser.role != roles.MARKET_RISK_REPORT_VIEWER">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>User Management</a>
+          <li nz-menu-item nzMatchRouter *ngIf="currentUser.role == roles.IT_USER_ADMIN">
+            <a [routerLink]="['/profile']" routerLinkActive="active">User Management</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>System Parameters</a>
+          <li nz-menu-item nzMatchRouter *ngIf="currentUser.role == roles.IT_SYSTEM_ADMIN">
+            <a [routerLink]="['/system-var']" routerLinkActive="active">System Parameters</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Market Risk Parameters</a>
+          <li nz-menu-item nzMatchRouter *ngIf="currentUser.role == roles.MARKET_RISK_ADMIN">
+            <a [routerLink]="['/market-risk-var']" routerLinkActive="active">Market Risk Parameters</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Report" nzIcon="profile">
+      <li nz-submenu nzOpen nzTitle="Report" nzIcon="profile" *ngIf="currentUser.role == roles.MARKET_RISK_REPORT_VIEWER">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a>Report</a>
+            <a [routerLink]="['/report']" routerLinkActive="active">Report</a>
           </li>
         </ul>
       </li>
     </ul>
+    <button class="sidebar-bottom" nz-button nzType="primary" nzBlock (click)="logout()">Logout</button>
   </nz-sider>
   <nz-layout>
     <nz-header>
       <div class="app-header">
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          ></i>
         </span>
       </div>
     </nz-header>
@@ -45,4 +44,11 @@
       </div>
     </nz-content>
   </nz-layout>
+</nz-layout>
+<nz-layout class="app-layout" *ngIf="!userService.currentUserValue">
+  <nz-content>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
 </nz-layout>
